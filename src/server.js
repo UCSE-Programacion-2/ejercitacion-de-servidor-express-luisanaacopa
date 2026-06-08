@@ -20,27 +20,26 @@ app.get('/', (req, res) => {
 });
 
 app.get('/productos', (req, res) => {
-  const categoria = req.query.categoria;
+  const { categoria } = req.query;
 
   if (categoria) {
     const filtrados = productos.filter((producto) => producto.categoria === categoria);
-
     return res.json(filtrados);
   }
 
-  res.json(productos);
+  return res.json(productos);
 });
 
 app.get('/usuarios/:id', (req, res) => {
   const id = Number(req.params.id);
 
-  const usuario = usuarios.find((usuario) => usuario.id === id);
+  const usuarioEncontrado = usuarios.find((item) => item.id === id);
 
-  if (!usuario) {
+  if (!usuarioEncontrado) {
     return res.status(404).send('Usuario no encontrado.');
   }
 
-  res.json(usuario);
+  return res.json(usuarioEncontrado);
 });
 
 app.use((req, res) => {
